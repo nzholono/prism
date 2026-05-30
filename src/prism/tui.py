@@ -202,7 +202,7 @@ class PrismApp(App):
             self.client = ApiClient()
             self.client.health()
         except PharosUnavailable:
-            await self.query_one("#content", Static).update(
+            self.query_one("#content", Static).update(
                 "[red]Cannot reach Pharos.[/red]\n\n"
                 "Start the server in another terminal:\n\n"
                 "    uv run pharos\n\n"
@@ -226,7 +226,7 @@ class PrismApp(App):
         if self.client is None:
             return
         stats = self.client.stats()
-        await self.query_one("#content", Static).update(
+        self.query_one("#content", Static).update(
             f"[bold]Welcome to Prism[/bold]\n\n"
             f"  Domains:   {stats.domains}\n"
             f"  Statutes:  {stats.statutes}\n"
@@ -250,7 +250,7 @@ class PrismApp(App):
             body += "## Statutes\n\n"
             for s in d.statutes:
                 body += f"- **{s.citation}** — {s.title}\n"
-        await self.query_one("#content", Static).update(body)
+        self.query_one("#content", Static).update(body)
         scenarios_view = self.query_one("#scenario-list", ListView)
         await scenarios_view.clear()
         for sc in d.scenarios:
@@ -273,7 +273,7 @@ class PrismApp(App):
                 body += f"- **{s.citation}** — {s.title}\n  {s.summary}\n\n"
         if sc.template_md:
             body += "\n" + sc.template_md
-        await self.query_one("#content", Static).update(body)
+        self.query_one("#content", Static).update(body)
 
     async def action_search(self) -> None:
         if self.client is None:
@@ -283,12 +283,12 @@ class PrismApp(App):
             return
         hits = self.client.search(query)
         if not hits:
-            await self.query_one("#content", Static).update(f"No matches for '{query}'.")
+            self.query_one("#content", Static).update(f"No matches for '{query}'.")
             return
         body = f"# Search results for '{query}'\n\n"
         for h in hits:
             body += f"- [{h.kind}] **{h.title}** ({h.domain_slug})\n  {h.snippet}\n\n"
-        await self.query_one("#content", Static).update(body)
+        self.query_one("#content", Static).update(body)
 
     async def action_ethics(self) -> None:
         if self.client is None:
@@ -303,7 +303,7 @@ class PrismApp(App):
             for q in p.questions:
                 body += f"- {q}\n"
             body += "\n"
-        await self.query_one("#content", Static).update(body)
+        self.query_one("#content", Static).update(body)
 
     async def action_new_decision(self) -> None:
         if self.client is None:
@@ -320,14 +320,14 @@ class PrismApp(App):
                 body += f"- **{b.bias_slug}** — {b.evidence}\n\n"
         else:
             body += "_No bias flags raised._\n"
-        await self.query_one("#content", Static).update(body)
+        self.query_one("#content", Static).update(body)
 
     async def action_list_decisions(self) -> None:
         if self.client is None:
             return
         decisions = self.client.list_decisions()
         if not decisions:
-            await self.query_one("#content", Static).update(
+            self.query_one("#content", Static).update(
                 "No decisions logged yet. Press [bold]n[/bold] to log one."
             )
             return
@@ -341,7 +341,7 @@ class PrismApp(App):
                 f"Chose: **{d.chosen}** (confidence {d.confidence}) — outcome: {outcome}\n\n"
                 f"Biases: {biases}\n\n---\n\n"
             )
-        await self.query_one("#content", Static).update(body)
+        self.query_one("#content", Static).update(body)
 
     async def action_stats(self) -> None:
         await self._show_home()
