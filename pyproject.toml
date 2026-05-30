@@ -1,0 +1,48 @@
+[project]
+name = "prism"
+version = "0.1.0"
+description = "A framework for reasoning about legal and ethical decisions in Illinois — through legal, ethical, and cognitive lenses."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Nurdan Zholonova", email = "nzholono@depaul.edu" }
+]
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "typer>=0.12",
+    "rich>=13",
+    "textual>=0.80",
+    "httpx>=0.27",
+    "pydantic>=2.7",
+    "jinja2>=3.1",
+    "python-multipart>=0.0.9",
+    "mcp>=1.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=0.23",
+]
+
+[project.scripts]
+pharos        = "prism.server:main"
+prism-cli     = "prism.cli:app"
+prism-tui     = "prism.tui:main"
+prism-web     = "prism.web:main"
+prism-gui     = "prism.gui:main"
+prism-mcp     = "prism.mcp_server:main"
+
+[build-system]
+requires = ["uv_build>=0.11.2,<0.12.0"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+markers = [
+    "unit: pure logic, no I/O",
+    "contract: REST API shape (in-process)",
+    "integration: full stack through real clients",
+]
