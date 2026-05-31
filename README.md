@@ -56,7 +56,7 @@ uv run prism-mcp
 
 ## Features
 
-### Legal lens — 9 Illinois domains
+### Legal lens — 10 Illinois domains
 
 **Tier 1 (deep coverage with multiple scenarios + walkthroughs):**
 - **Tenant rights** — security deposits, eviction notices, repairs, Chicago RLTO
@@ -64,12 +64,13 @@ uv run prism-mcp
 - **Police & ICE encounters** — Illinois TRUST Act, your rights during a stop, what to say (and not say)
 - **Consumer rights & debt** — FDCPA, Illinois Consumer Fraud Act, BIPA (biometric privacy)
 
-**Tier 2 (scaffolded, designed to be extended via the `add-scenario` skill):**
+**Tier 2 (real content, extensible via the `add-scenario` skill):**
 - Campus / student rights (Title IX, FERPA, ADA)
 - Healthcare & medical bills (Hospital Uninsured Patient Discount Act)
 - Immigration / international students (F-1, OPT)
 - Mental health rights (involuntary commitment, MH&DDC Act)
 - Traffic & vehicle (tickets, accidents, towing)
+- Criminal records & expungement (Illinois Criminal Identification Act)
 
 ### Ethical lens — 4 frameworks
 
@@ -82,7 +83,7 @@ For any situation, Prism frames the choice through:
 
 Each framework comes with key questions to ask yourself.
 
-### Cognitive lens — decision journal + 13 bias detectors
+### Cognitive lens — decision journal + 15 bias detectors
 
 Log a decision *before* you know the outcome. Prism stores:
 - the situation, your options, what you chose
@@ -105,6 +106,8 @@ Log a decision *before* you know the outcome. Prism stores:
 | Hindsight | Treating outcome as if it was knowable in advance |
 | Fundamental attribution | Explaining behavior by character, not situation |
 | Halo effect | One positive trait coloring overall judgment |
+| Recency | A single recent event overshadowing the longer pattern |
+| Self-serving | Externalizing failure / claiming all credit for success |
 
 **Calibration over time:** `prism-cli stats --calibration` shows whether your confidence has tracked reality. Are you overconfident? Underconfident? Do certain biases correlate with bad outcomes?
 

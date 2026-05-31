@@ -14,6 +14,7 @@ from prism import db
 from prism.seed import (
     campus,
     consumer,
+    criminal_record,
     employment,
     ethical,
     healthcare,
@@ -36,6 +37,7 @@ ALL_DOMAIN_MODULES = [
     mental_health,
     immigration,
     traffic,
+    criminal_record,
 ]
 
 

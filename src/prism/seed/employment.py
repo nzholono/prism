@@ -143,6 +143,72 @@ STATUTES = [
 
 SCENARIOS = [
     {
+        "slug": "pregnancy-discrimination",
+        "title": "I'm pregnant (or recently gave birth) and being treated differently at work",
+        "linked_statutes": ["775 ILCS 5/1-103"],
+        "description_md": (
+            "Your boss makes comments about your pregnancy, denies you "
+            "accommodations, schedules you out of important projects, or "
+            "fires you after you disclose. Illinois has unusually strong "
+            "protections — broader than federal law — covering hiring, "
+            "firing, accommodations, pumping space, and time off."
+        ),
+        "walkthrough_md": (
+            "## What's protected in Illinois\n\n"
+            "Under the Illinois Human Rights Act (775 ILCS 5) and the "
+            "Illinois Pregnancy Accommodation Act, **all** Illinois "
+            "employers (regardless of size) must:\n\n"
+            "- **Not discriminate** based on pregnancy, childbirth, or "
+            "related medical conditions.\n"
+            "- **Provide reasonable accommodations** — light duty, more "
+            "frequent breaks, modified schedules, time off for prenatal "
+            "appointments, seating, water access, help with manual labor.\n"
+            "- **Provide private, sanitary pumping space** (not a bathroom) "
+            "and reasonable break time, for up to 1 year after birth.\n"
+            "- **Hold your job** (or equivalent position) during pregnancy "
+            "or parental leave under FMLA (if you and the employer qualify).\n"
+            "- **Not retaliate** against you for requesting any of the above.\n\n"
+            "## What to do\n\n"
+            "1. **Document.** Date and content of every comment, email, "
+            "schedule change, performance comment. Save copies in personal "
+            "email/cloud (not work account).\n\n"
+            "2. **Request accommodations in writing.** Email is best — "
+            "creates a paper trail. Be specific: 'I need a seated workstation "
+            "due to pregnancy. My doctor's note is attached.'\n\n"
+            "3. **The employer must engage in an 'interactive process'.** "
+            "They can't just refuse. They can offer alternatives but must "
+            "discuss in good faith.\n\n"
+            "4. **If they deny without good reason, refuse to discuss, or "
+            "retaliate** (cut hours, change schedule, demote, fire), this "
+            "is likely illegal.\n\n"
+            "5. **File a charge with IDHR** within **300 days** of the act. "
+            "Free, no lawyer required (though a lawyer often helps). "
+            "illinois.gov/dhr.\n\n"
+            "6. **For federal claims**, EEOC dual-filing is automatic when "
+            "you file with IDHR. Federal Pregnancy Discrimination Act covers "
+            "employers with 15+ employees; the **Pregnant Workers Fairness "
+            "Act** (effective June 2023) added accommodation requirements.\n\n"
+            "7. **FMLA leave** (if you and employer qualify): up to 12 weeks "
+            "of unpaid, job-protected leave for childbirth and bonding. "
+            "Employer must restore you to your same or equivalent position. "
+            "Illinois employers with 50+ employees within a 75-mile area "
+            "are typically covered.\n\n"
+            "8. **Don't sign a severance agreement** without showing it to "
+            "a lawyer first. Severance often waives all claims, including "
+            "pregnancy discrimination ones.\n\n"
+            "## Free help\n\n"
+            "- **Illinois Department of Human Rights**: (312) 814-6200\n"
+            "- **EEOC Chicago District Office**: (800) 669-4000\n"
+            "- **A Better Balance** (pregnancy & caregiving legal helpline): "
+            "1-833-NEED-ABB (633-3222)\n"
+            "- **Chicago Lawyers' Committee for Civil Rights**: clccrul.org\n\n"
+            "---\n\n"
+            "*This is reference material, not legal advice. The 300-day "
+            "filing deadline is strict — don't delay.*"
+        ),
+        "template_md": None,
+    },
+    {
         "slug": "non-compete-agreement",
         "title": "My employer wants me to sign a non-compete agreement",
         "linked_statutes": [],

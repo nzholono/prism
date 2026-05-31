@@ -2,6 +2,19 @@
 
 All notable changes to Prism. Most recent first.
 
+## Day 8 — May 30 (late night) — More depth, new domain
+
+### Added
+- **New domain: criminal-record** — Illinois expungement & sealing law (20 ILCS 2630/5.2), with detailed walkthrough on clearing an old arrest or conviction. Now **10 domains**.
+- **3 new scenarios:**
+  - `employment/pregnancy-discrimination` — Illinois Pregnancy Accommodation Act, FMLA, IDHR filing
+  - `consumer/identity-theft` — full step-by-step from fraud alert through sealing accounts
+  - `criminal-record/expunge-old-arrest` — RAP sheet pull, eligibility, free legal aid clinics
+- **2 new bias detectors** — now **15 total**:
+  - **recency_bias** — recent vivid event overshadowing longer pattern
+  - **self_serving_bias** — externalizing failure / claiming all credit for success
+- Unit tests for both new detectors plus a 15-bias integration test.
+
 ## Day 7 — May 30 (night) — Content depth
 
 ### Added

@@ -300,6 +300,70 @@ def detect_halo(d: DecisionCreate) -> BiasResult:
     return None
 
 
+_RECENCY_REGEX = re.compile(
+    r"\b(just |yesterday|this morning|today|the last time|the last one|the most recent|lately)\b",
+    re.IGNORECASE,
+)
+
+
+def detect_recency(d: DecisionCreate) -> BiasResult:
+    """Recent event overshadowing the longer pattern."""
+    text = _haystack(d)
+    matches = _RECENCY_REGEX.findall(text)
+    # Trigger if reasoning has 2+ recency markers and doesn't acknowledge a longer pattern
+    if len(matches) >= 2 and not any(
+        w in text for w in ["usually", "typically", "historically", "pattern", "over time", "in general"]
+    ):
+        return (
+            "recency_bias",
+            "Reasoning leans heavily on recent events. What's the longer "
+            "pattern? Does the recent event represent the norm, or is it "
+            "an outlier?",
+        )
+    return None
+
+
+SELF_SERVING_PATTERNS_BAD = [
+    r"(it'?s|its) not my fault",
+    r"(he|she|they) (made|forced|tricked) me",
+    r"(i was|i'?m) unlucky",
+    r"i had no (choice|option)",
+    r"the (system|market|situation) was against",
+]
+
+SELF_SERVING_PATTERNS_GOOD = [
+    r"(my|i) hard work",
+    r"i deserve",
+    r"i earned (this|it)",
+    r"that'?s on me",
+]
+
+
+def detect_self_serving(d: DecisionCreate) -> BiasResult:
+    """Attributing success to self, failure to circumstance (or vice versa)."""
+    text = _haystack(d)
+    for pattern in SELF_SERVING_PATTERNS_BAD:
+        m = re.search(pattern, text)
+        if m:
+            return (
+                "self_serving_bias",
+                f"Phrase '{m.group(0)}' externalizes the cause of a "
+                "negative outcome. What was your contribution to how this "
+                "turned out — even a small one?",
+            )
+    # also catch unearned attribution of success
+    success_signals = sum(1 for p in SELF_SERVING_PATTERNS_GOOD if re.search(p, text))
+    failure_signals = sum(1 for p in SELF_SERVING_PATTERNS_BAD if re.search(p, text))
+    if success_signals >= 2 and failure_signals == 0:
+        return (
+            "self_serving_bias",
+            "Reasoning attributes positive outcomes to your own effort and "
+            "skill without mentioning luck or external help. What broke your "
+            "way? Who helped?",
+        )
+    return None
+
+
 ALL_DETECTORS: list[Detector] = [
     detect_sunk_cost,
     detect_anchoring,
@@ -314,6 +378,8 @@ ALL_DETECTORS: list[Detector] = [
     detect_hindsight,
     detect_fundamental_attribution,
     detect_halo,
+    detect_recency,
+    detect_self_serving,
 ]
 
 

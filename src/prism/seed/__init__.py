@@ -18,6 +18,7 @@ import sqlite3
 from prism.seed import (
     campus,
     consumer,
+    criminal_record,
     employment,
     ethical,
     healthcare,
@@ -36,9 +37,10 @@ def seed_all(conn: sqlite3.Connection) -> None:
     employment.seed(conn)
     police.seed(conn)
     consumer.seed(conn)
-    # Tier 2 (real content, not stubs)
+    # Tier 2 (real content)
     campus.seed(conn)
     healthcare.seed(conn)
     mental_health.seed(conn)
     immigration.seed(conn)
     traffic.seed(conn)
+    criminal_record.seed(conn)

@@ -127,6 +127,81 @@ STATUTES = [
 
 SCENARIOS = [
     {
+        "slug": "identity-theft",
+        "title": "Someone stole my identity (credit card, SSN, or opened accounts in my name)",
+        "linked_statutes": ["815 ILCS 505/2"],
+        "description_md": (
+            "You spotted unfamiliar charges on a card, got a credit card bill "
+            "for a card you didn't open, or saw a credit report with accounts "
+            "you never authorized. Move fast. The first 48 hours matter a lot."
+        ),
+        "walkthrough_md": (
+            "## What to do — in this order\n\n"
+            "**1. Place a fraud alert on your credit immediately.**\n"
+            "Call **one** of the three bureaus (they share the alert):\n"
+            "   - **Equifax**: (800) 525-6285\n"
+            "   - **Experian**: (888) 397-3742\n"
+            "   - **TransUnion**: (800) 680-7289\n\n"
+            "A free fraud alert lasts 1 year; an extended alert lasts 7 years "
+            "(needs an identity-theft report).\n\n"
+            "**2. Consider a credit freeze** (stronger). Free, must be done "
+            "at each of the 3 bureaus separately. Locks new credit accounts "
+            "from being opened in your name until you unfreeze.\n\n"
+            "**3. Get an Identity Theft Report.**\n"
+            "Go to **identitytheft.gov** — the FTC's official site. Fill out "
+            "the form. It generates an FTC Identity Theft Report and "
+            "personalized recovery plan. This report unlocks many remedies "
+            "that aren't otherwise available.\n\n"
+            "**4. File a police report.**\n"
+            "Bring the FTC report. The police report is required for some "
+            "remedies (debt removal, longer fraud alerts). Don't let the "
+            "officer talk you out of it — politely insist.\n\n"
+            "**5. Contact each affected company.**\n"
+            "For each fraudulent account or charge:\n"
+            "   - Call the company's fraud department.\n"
+            "   - Identify the account as fraudulent.\n"
+            "   - Send a follow-up letter (certified mail) with copies of "
+            "the FTC report and police report.\n"
+            "   - Request: (a) close the account, (b) remove the charges, "
+            "(c) send written confirmation, (d) supply documents showing what "
+            "the fraudster did.\n\n"
+            "**6. Dispute fraudulent items on your credit reports.**\n"
+            "Send a dispute to each of the 3 bureaus, including:\n"
+            "   - FTC report\n"
+            "   - Police report\n"
+            "   - Specific items disputed\n"
+            "   - Demand: 'Block these items per the Fair Credit Reporting "
+            "Act section 605B (15 U.S.C. § 1681c-2).' The bureau must comply "
+            "within 4 business days of receiving valid documentation.\n\n"
+            "**7. Get free credit reports** at annualcreditreport.com. "
+            "Identity-theft victims can get them weekly.\n\n"
+            "**8. Change your passwords** for online banking, email, "
+            "shopping. Enable 2-factor authentication.\n\n"
+            "**9. Consider locking your tax filings.** The IRS Identity "
+            "Protection PIN program (IRS Form 15227) prevents fraudsters "
+            "from filing tax returns in your name.\n\n"
+            "**10. If you're owed money** for unauthorized charges that "
+            "haven't been reversed, you can sue under the Illinois Consumer "
+            "Fraud Act (815 ILCS 505) — actual damages plus possibly "
+            "attorney's fees.\n\n"
+            "## Illinois-specific resources\n\n"
+            "- **Illinois Attorney General Identity Theft Hotline**: "
+            "(866) 999-5630\n"
+            "- **Illinois Identity Protection Act** — gives Illinois "
+            "residents specific rights regarding government data breaches\n"
+            "- **CARPLS**: (312) 738-9200\n\n"
+            "## Federal resources\n\n"
+            "- **FTC Identity Theft Center**: identitytheft.gov\n"
+            "- **SSA Fraud Hotline** (if SSN was used): (800) 269-0271\n"
+            "- **IRS Identity Theft Hotline**: (800) 908-4490\n\n"
+            "---\n\n"
+            "*This is reference material, not legal advice. Time matters — "
+            "fraud alerts and police reports started in the first 48 hours "
+            "give you the strongest remedies.*"
+        ),
+        "template_md": None,
+    },
+    {
         "slug": "subscription-wont-cancel",
         "title": "A company won't let me cancel my subscription",
         "linked_statutes": ["815 ILCS 505/2"],
