@@ -37,7 +37,7 @@ def test_home_renders(web_client):
     r = web_client.get("/")
     assert r.status_code == 200
     assert "Prism" in r.text
-    assert "Browse legal domains" in r.text
+    assert "Browse legal" in r.text  # link text in the "Start here" card
 
 
 def test_domains_index_includes_tenant(web_client):

@@ -21,39 +21,198 @@ from prism.models import DecisionCreate, DecisionUpdate
 
 _BASE_CSS = """
 <style>
-  body { font: 16px/1.5 -apple-system, system-ui, sans-serif;
-         max-width: 860px; margin: 2rem auto; padding: 0 1rem;
-         color: #1a1a1a; background: #fafafa; }
-  h1, h2, h3 { color: #2c3e50; }
-  nav { background: #2c3e50; color: white; padding: 0.6rem 1rem;
-        border-radius: 6px; margin-bottom: 2rem; }
-  nav a { color: white; margin-right: 1.2rem; text-decoration: none; }
-  nav a:hover { text-decoration: underline; }
-  .card { background: white; border-radius: 6px; padding: 1.2rem;
-          margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-  .tag { display: inline-block; padding: 0 0.5rem; background: #ecf0f1;
-         border-radius: 3px; font-size: 0.85em; margin-right: 0.4rem; }
-  .bias { background: #fff8dc; border-left: 4px solid #f39c12;
-          padding: 0.5rem 1rem; margin: 0.5rem 0; border-radius: 3px; }
-  .scenario-body, .scenario-body pre { white-space: pre-wrap; }
-  form label { display: block; margin-top: 0.8rem; font-weight: 600; }
-  form input, form textarea { width: 100%; padding: 0.4rem;
-         border: 1px solid #ccc; border-radius: 3px; box-sizing: border-box; }
-  form textarea { min-height: 5rem; }
-  button { background: #2c3e50; color: white; border: none;
-           padding: 0.6rem 1.2rem; border-radius: 3px; cursor: pointer;
-           font-size: 1rem; margin-top: 1rem; }
-  button:hover { background: #34495e; }
-  .error { color: #c0392b; background: #fadbd8; padding: 0.6rem 1rem;
-           border-radius: 3px; }
-  footer { margin-top: 3rem; color: #7f8c8d; font-size: 0.9em; }
-  .citation { color: #2980b9; font-family: ui-monospace, Menlo, monospace; }
+  :root {
+    --primary: #2c3e50;
+    --primary-light: #34495e;
+    --accent: #16a085;
+    --warn: #f39c12;
+    --danger: #c0392b;
+    --text: #1d1d1f;
+    --text-dim: #6e6e73;
+    --bg: #fafafa;
+    --card-bg: #ffffff;
+    --border: #e4e4e7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text",
+          system-ui, sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.2rem 4rem;
+    color: var(--text);
+    background: var(--bg);
+  }
+  h1 { font-size: 2.2rem; font-weight: 700; margin-top: 0;
+       letter-spacing: -0.02em; color: var(--primary); }
+  h2 { font-size: 1.5rem; font-weight: 600; margin-top: 2rem;
+       color: var(--primary); }
+  h3 { font-size: 1.15rem; font-weight: 600; color: var(--primary); }
+  p { margin: 0.6rem 0; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  nav {
+    display: flex; gap: 0.4rem; align-items: center;
+    background: var(--primary);
+    padding: 0.7rem 1.2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.15);
+  }
+  nav .brand {
+    color: white; font-weight: 700; font-size: 1.1rem;
+    margin-right: auto; letter-spacing: 0.02em;
+  }
+  nav a {
+    color: rgba(255,255,255,0.85);
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background 0.15s;
+  }
+  nav a:hover {
+    background: rgba(255,255,255,0.12);
+    color: white;
+    text-decoration: none;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    transition: box-shadow 0.15s, transform 0.05s;
+  }
+  .card:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+  .card h3 { margin-top: 0; }
+  .card h3 a { color: var(--primary); }
+  .card h3 a:hover { color: var(--accent); text-decoration: none; }
+
+  .tag {
+    display: inline-block;
+    padding: 0.15rem 0.55rem;
+    background: #ecf0f1;
+    color: var(--text-dim);
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-right: 0.4rem;
+  }
+  .tag.tier1 { background: #d4efdf; color: #196f3d; }
+  .tag.tier2 { background: #fdebd0; color: #9c6310; }
+
+  .bias {
+    background: linear-gradient(to right, #fff8dc, #fffbe6);
+    border-left: 4px solid var(--warn);
+    padding: 0.7rem 1.1rem;
+    margin: 0.7rem 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .bias strong { color: #9c6310; text-transform: uppercase;
+                 font-size: 0.78rem; letter-spacing: 0.05em; }
+
+  .scenario-body, .scenario-body pre { white-space: pre-wrap;
+                                       line-height: 1.7; }
+  pre {
+    background: #f5f5f7;
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    overflow-x: auto;
+    font: 13px/1.5 ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  form label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 0.92rem;
+  }
+  form input, form textarea {
+    width: 100%;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    background: white;
+    transition: border-color 0.15s;
+  }
+  form input:focus, form textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(22, 160, 133, 0.15);
+  }
+  form textarea { min-height: 5rem; resize: vertical; }
+
+  button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.65rem 1.4rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-top: 1.2rem;
+    transition: background 0.15s, transform 0.05s;
+  }
+  button:hover { background: var(--primary-light); }
+  button:active { transform: translateY(1px); }
+
+  .error {
+    color: var(--danger);
+    background: #fadbd8;
+    padding: 0.8rem 1.2rem;
+    border-radius: 6px;
+    border-left: 4px solid var(--danger);
+  }
+  .stat-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem; margin: 1rem 0;
+  }
+  .stat-card {
+    background: white; padding: 1rem; border-radius: 8px;
+    border: 1px solid var(--border); text-align: center;
+  }
+  .stat-card .num { font-size: 2.2rem; font-weight: 700;
+                    color: var(--primary); line-height: 1; }
+  .stat-card .lbl { font-size: 0.85rem; color: var(--text-dim);
+                    text-transform: uppercase; letter-spacing: 0.04em;
+                    margin-top: 0.4rem; }
+
+  footer {
+    margin-top: 4rem;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .citation {
+    color: var(--accent);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.92em;
+    background: rgba(22, 160, 133, 0.08);
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+  }
+  .disclaimer {
+    background: #fff3cd; color: #856404; padding: 0.7rem 1rem;
+    border-radius: 6px; font-size: 0.9rem; margin: 1rem 0;
+    border-left: 3px solid #ffe57f;
+  }
 </style>
 """
 
 _NAV = """
 <nav>
-  <a href="/">Home</a>
+  <a href="/" class="brand">◇ Prism</a>
   <a href="/domains">Rights</a>
   <a href="/decisions">Decisions</a>
   <a href="/ethics">Ethics</a>
@@ -127,20 +286,37 @@ def create_app(pharos_url: str = "http://127.0.0.1:8000") -> FastAPI:
             return _unavailable()
         body = (
             "<h1>Prism</h1>"
-            "<p>Illinois legal &amp; ethical reasoning — through three lenses.</p>"
-            f"<div class='card'>"
-            f"<h3>At a glance</h3>"
-            f"<p>{stats.domains} domains · {stats.statutes} statutes · "
-            f"{stats.scenarios} scenarios · {stats.decisions} decisions "
-            f"({stats.bias_flags} bias flags raised)</p>"
-            f"</div>"
-            "<div class='card'><h3>What can I do here?</h3>"
+            "<p style='font-size: 1.15rem; color: var(--text-dim); margin-bottom: 2rem;'>"
+            "Illinois legal &amp; ethical reasoning — through three lenses."
+            "</p>"
+            "<div class='stat-grid'>"
+            f"<div class='stat-card'><div class='num'>{stats.domains}</div>"
+            f"<div class='lbl'>Domains</div></div>"
+            f"<div class='stat-card'><div class='num'>{stats.statutes}</div>"
+            f"<div class='lbl'>Statutes</div></div>"
+            f"<div class='stat-card'><div class='num'>{stats.scenarios}</div>"
+            f"<div class='lbl'>Scenarios</div></div>"
+            f"<div class='stat-card'><div class='num'>{stats.decisions}</div>"
+            f"<div class='lbl'>Decisions</div></div>"
+            "</div>"
+            "<div class='card'><h3>The three lenses</h3>"
+            "<p><strong>Legal lens</strong> — What Illinois &amp; Chicago law actually "
+            "says, with walkthroughs and templates.</p>"
+            "<p><strong>Ethical lens</strong> — Four frameworks (utilitarian, "
+            "deontological, virtue, care) framing the same choice differently.</p>"
+            "<p><strong>Cognitive lens</strong> — A decision journal that flags "
+            "ten cognitive biases before you commit.</p>"
+            "</div>"
+            "<div class='card'><h3>Start here</h3>"
             "<ul>"
-            "<li><a href='/domains'>Browse legal domains</a> — Illinois statutes and scenarios</li>"
+            "<li><a href='/domains'>Browse legal rights</a> — by domain</li>"
             "<li><a href='/decisions/new'>Log a decision</a> — get automatic bias detection</li>"
-            "<li><a href='/ethics'>Analyze a situation ethically</a> — through four frameworks</li>"
-            "<li><a href='/search'>Search</a> everything</li>"
+            "<li><a href='/ethics'>Analyze a situation ethically</a></li>"
+            "<li><a href='/search'>Search</a> across all statutes and scenarios</li>"
             "</ul></div>"
+            "<div class='disclaimer'>This is reference material, not legal advice. "
+            "For your specific situation, contact a licensed Illinois attorney or one of "
+            "the free legal aid resources listed in each scenario.</div>"
         )
         return HTMLResponse(_page("Home", body))
 
@@ -151,11 +327,18 @@ def create_app(pharos_url: str = "http://127.0.0.1:8000") -> FastAPI:
         except PharosUnavailable:
             return _unavailable()
         body = "<h1>Legal domains</h1>"
+        body += (
+            "<p style='color: var(--text-dim);'>"
+            "Tier 1 domains have multiple scenarios with deep walkthroughs. "
+            "Tier 2 are scaffolded — extend them via the <code>add-scenario</code> "
+            "Claude skill.</p>"
+        )
         for d in domains:
+            tier_cls = "tier1" if d.tier == 1 else "tier2"
             body += (
                 f"<div class='card'>"
                 f"<h3><a href='/domains/{d.slug}'>{d.name}</a> "
-                f"<span class='tag'>Tier {d.tier}</span></h3>"
+                f"<span class='tag {tier_cls}'>Tier {d.tier}</span></h3>"
                 f"<p>{d.summary}</p></div>"
             )
         return HTMLResponse(_page("Domains", body))

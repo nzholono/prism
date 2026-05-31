@@ -131,6 +131,100 @@ def detect_optimism(d: DecisionCreate) -> BiasResult:
     return None
 
 
+STATUS_QUO_PATTERNS = [
+    r"i've always",
+    r"this is how (it'?s |i'?ve )always",
+    r"why change now",
+    r"don'?t fix what isn'?t broken",
+    r"keep things (the same|as they are)",
+]
+
+
+def detect_status_quo(d: DecisionCreate) -> BiasResult:
+    """Defaulting to no-change without examining alternatives."""
+    text = _haystack(d)
+    for pattern in STATUS_QUO_PATTERNS:
+        m = re.search(pattern, text)
+        if m:
+            return (
+                "status_quo",
+                f"Phrase '{m.group(0)}' suggests defaulting to no-change. "
+                "Examine the alternatives as if you had to pick fresh.",
+            )
+    # also flag when "do nothing" / "keep" is chosen with minimal reasoning
+    if (
+        d.chosen.lower() in {"do nothing", "stay", "wait", "no change"}
+        and len(d.reasoning) < 60
+    ):
+        return (
+            "status_quo",
+            f"Chose '{d.chosen}' with very short reasoning. The 'no change' "
+            "option deserves the same scrutiny as the active ones.",
+        )
+    return None
+
+
+BANDWAGON_PATTERNS = [
+    r"everyone (else )?(is|does|says)",
+    r"my (friends?|family|coworkers?|classmates?) (all |are )",
+    r"(everybody|nobody) does",
+    r"that'?s what people do",
+]
+
+
+def detect_bandwagon(d: DecisionCreate) -> BiasResult:
+    """Choosing because others chose, not because the choice fits the situation."""
+    text = _haystack(d)
+    for pattern in BANDWAGON_PATTERNS:
+        m = re.search(pattern, text)
+        if m:
+            return (
+                "bandwagon",
+                f"Phrase '{m.group(0)}' suggests social proof is driving the "
+                "choice. Would you still pick this if others weren't?",
+            )
+    return None
+
+
+FRAMING_PATTERNS = [
+    (r"\bonly\b.*(lose|cost|risk)", "downside framing"),
+    (r"\bguaranteed\b", "certainty framing"),
+    (r"\b\d+% (success|chance|likely)", "positive percentage framing"),
+    (r"\b\d+% (fail|risk|likely to)", "negative percentage framing"),
+]
+
+
+def detect_framing(d: DecisionCreate) -> BiasResult:
+    """Reasoning leans heavily on one frame (gain vs loss, certainty vs probability)."""
+    text = _haystack(d)
+    for pattern, label in FRAMING_PATTERNS:
+        m = re.search(pattern, text)
+        if m:
+            return (
+                "framing",
+                f"Phrase '{m.group(0)}' uses {label}. Try flipping the frame — "
+                "if the same fact were described the opposite way, would you choose differently?",
+            )
+    return None
+
+
+def detect_planning_fallacy(d: DecisionCreate) -> BiasResult:
+    """Underestimating time/cost — common when chosen path involves work."""
+    text = _haystack(d)
+    quick_words = ["quick", "easy", "simple", "fast", "shouldn't take", "just a"]
+    risk_words = ["might take longer", "could take", "if it drags", "buffer", "delay"]
+    quick = sum(text.count(w) for w in quick_words)
+    risk = sum(text.count(w) for w in risk_words)
+    if quick >= 2 and risk == 0:
+        return (
+            "planning_fallacy",
+            f"Reasoning uses 'quick/easy/simple' {quick}x with no mention of "
+            "delays or longer-than-expected scenarios. Most plans take longer "
+            "than expected — what if this one does?",
+        )
+    return None
+
+
 ALL_DETECTORS: list[Detector] = [
     detect_sunk_cost,
     detect_anchoring,
@@ -138,6 +232,10 @@ ALL_DETECTORS: list[Detector] = [
     detect_availability,
     detect_loss_aversion,
     detect_optimism,
+    detect_status_quo,
+    detect_bandwagon,
+    detect_framing,
+    detect_planning_fallacy,
 ]
 
 

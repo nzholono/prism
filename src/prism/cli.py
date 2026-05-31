@@ -69,8 +69,12 @@ def version() -> None:
 
 
 @app.command()
-def stats() -> None:
-    """Show counts of domains, statutes, scenarios, decisions."""
+def stats(
+    calibration: bool = typer.Option(
+        False, "--calibration", "-c", help="Show how well your confidence has tracked reality."
+    )
+) -> None:
+    """Show counts of domains, statutes, scenarios, decisions. Add --calibration for accuracy report."""
     client = _client()
     s = client.stats()
     table = Table(title="Prism stats", show_header=False, box=None)
@@ -80,6 +84,14 @@ def stats() -> None:
     table.add_row("Decisions", str(s.decisions))
     table.add_row("Bias flags", str(s.bias_flags))
     console.print(table)
+
+    if calibration:
+        from prism.lenses.cognitive.calibration import calibrate
+
+        decisions = client.list_decisions(limit=1000)
+        report = calibrate(decisions)
+        console.print()
+        console.print(Panel(report.summary(), title="Calibration", border_style="cyan"))
 
 
 @app.command()
