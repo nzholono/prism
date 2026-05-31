@@ -206,10 +206,27 @@ def ethics_analyze(situation: str = typer.Argument(..., help="The situation in o
 # ─── decide subcommands ─────────────────────────────────────────────────────
 
 @decide_app.command("new")
-def decide_new() -> None:
+def decide_new(
+    scenario: Optional[str] = typer.Option(
+        None,
+        "--scenario",
+        "-s",
+        help="Link this decision to a legal scenario by slug (e.g., deposit-not-returned).",
+    ),
+) -> None:
     """Interactively log a new decision and see flagged biases."""
     client = _client()
     console.print("[bold]New decision[/bold] — describe what you're deciding.\n")
+
+    linked_scenario_id: int | None = None
+    if scenario:
+        try:
+            sc = client.get_scenario(scenario)
+            linked_scenario_id = sc.id
+            console.print(f"[dim]Linked to scenario: [cyan]{sc.title}[/cyan][/dim]\n")
+        except Exception:
+            console.print(f"[yellow]Warning:[/yellow] no scenario named '{scenario}', continuing unlinked.\n")
+
     situation = Prompt.ask("What's happening?")
     raw_options = Prompt.ask("Your options (comma-separated)")
     options = [o.strip() for o in raw_options.split(",") if o.strip()]
@@ -228,6 +245,7 @@ def decide_new() -> None:
         reasoning=reasoning,
         expected_outcome=expected_outcome,
         confidence=confidence,
+        linked_scenario_id=linked_scenario_id,
     )
     decision = client.create_decision(d)
 
@@ -311,6 +329,137 @@ def decide_delete(decision_id: int) -> None:
         return
     client.delete_decision(decision_id)
     console.print(f"[green]Deleted decision #{decision_id}.[/green]")
+
+
+@decide_app.command("audit")
+def decide_audit(decision_id: int) -> None:
+    """Print a structured cognitive-bias audit of a past decision.
+
+    This walks through ~12 biases systematically (not just the automated
+    detectors), highlighting what's missing from your reasoning and offering
+    an alternative framing. Use it for important decisions before you commit.
+    """
+    client = _client()
+    d = client.get_decision(decision_id)
+
+    audit_lines = [
+        f"# Bias Audit — Decision #{d.id}",
+        "",
+        "## What you decided",
+        f"{d.situation}",
+        f"You chose **{d.chosen}** at {d.confidence}/100 confidence.",
+        "",
+        "## What the automated detectors caught",
+    ]
+    if d.biases:
+        for b in d.biases:
+            audit_lines.append(f"- **{b.bias_slug}** — {b.evidence}")
+    else:
+        audit_lines.append("_No flags. Doesn't mean none are present — check the manual review below._")
+
+    audit_lines += [
+        "",
+        "## Manual review checklist",
+        "",
+        "Check each below against the reasoning you wrote. Honest 'yes' is rare; "
+        "honest 'no' is most of the answers.",
+        "",
+        "- **Sunk cost** — Am I weighing past time/money I can't recover?",
+        "- **Anchoring** — Is one number or first option distorting my view?",
+        "- **Confirmation bias** — Did I list evidence for the *other* options?",
+        "- **Availability** — Am I generalizing from one recent vivid example?",
+        "- **Loss aversion** — Am I weighting losses more than equivalent gains?",
+        "- **Optimism** — Do I have a fallback plan if this goes wrong?",
+        "- **Status quo** — Did I evaluate 'do nothing' as seriously as the active options?",
+        "- **Bandwagon** — Would I still choose this if no one else did?",
+        "- **Framing** — Have I tried describing this in the opposite way?",
+        "- **Planning fallacy** — Have I budgeted for things taking longer than expected?",
+        "- **Hindsight reasoning** — Am I assuming the outcome is already known?",
+        "- **Self-serving framing** — Whose interests am I subtly centering?",
+        "",
+        "## What's missing from your reasoning",
+        "",
+    ]
+    missing = []
+    text = (d.reasoning or "").lower()
+    if "but" not in text and "however" not in text and "downside" not in text:
+        missing.append("- No counter-considerations mentioned.")
+    if not any(w in text for w in ["if it doesn't work", "backup", "fallback", "plan b", "worst case"]):
+        missing.append("- No fallback / contingency plan named.")
+    if "i" in text and " they" not in text and " them" not in text:
+        missing.append("- Reasoning is mostly first-person — whose perspective is missing?")
+    if d.confidence >= 80 and not missing:
+        pass
+    audit_lines.extend(missing or ["- (nothing obvious — but read it again)"])
+
+    audit_lines += [
+        "",
+        "## A different framing",
+        "",
+        "Imagine you were advising a friend in this exact situation, with no "
+        "emotional stake. Would you give them the same advice you're giving "
+        "yourself? If not, that's the gap to investigate.",
+        "",
+        "## Recommended next step",
+        "",
+        "Before committing, write one paragraph specifically about what would "
+        "have to be true for the **other** option to be the right choice. "
+        "If you can't write it, you haven't really considered it.",
+    ]
+
+    console.print(Markdown("\n".join(audit_lines)))
+
+
+@decide_app.command("export")
+def decide_export(
+    decision_id: int,
+    output: Optional[str] = typer.Option(None, "-o", help="Output file path. Defaults to ~/.prism/decisions/<id>.md"),
+) -> None:
+    """Export a decision as a standalone markdown file."""
+    import os
+    from pathlib import Path
+
+    client = _client()
+    d = client.get_decision(decision_id)
+
+    body_lines = [
+        f"# Decision #{d.id}",
+        "",
+        f"**Logged:** {d.created_at.strftime('%Y-%m-%d %H:%M')}",
+        "",
+        f"## Situation",
+        d.situation,
+        "",
+        f"## Options considered",
+    ]
+    for opt in d.options:
+        body_lines.append(f"- {opt}")
+    body_lines += [
+        "",
+        f"## Chose: {d.chosen}",
+        f"**Confidence:** {d.confidence}/100",
+        "",
+        f"## Reasoning",
+        d.reasoning,
+        "",
+        f"## Expected outcome",
+        d.expected_outcome,
+    ]
+    if d.biases:
+        body_lines += ["", "## Bias flags raised"]
+        for b in d.biases:
+            body_lines.append(f"- **{b.bias_slug}** — {b.evidence}")
+    if d.actual_outcome:
+        body_lines += ["", "## Actual outcome (reviewed)", d.actual_outcome]
+
+    output_path = (
+        Path(output)
+        if output
+        else Path.home() / ".prism" / "decisions" / f"{d.id}.md"
+    )
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text("\n".join(body_lines))
+    console.print(f"[green]Exported to[/green] {output_path}")
 
 
 if __name__ == "__main__":

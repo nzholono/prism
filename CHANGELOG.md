@@ -2,6 +2,27 @@
 
 All notable changes to Prism. Most recent first.
 
+## Day 6 — May 30 (late) — Expansion & professional polish
+
+### Added
+- **5 Tier-2 domains expanded** to real content (no longer stubs):
+  - **Campus** — FERPA, Title IX, ADA (3 statutes, 2 scenarios incl. Title IX walkthrough and grade-dispute appeal)
+  - **Healthcare** — Hospital Uninsured Patient Discount Act, No Surprises Act (2 statutes, 1 detailed walkthrough + negotiation template)
+  - **Mental health** — 405 ILCS 5/3-600 (involuntary admission), MHDDC confidentiality (2 statutes, 988-vs-911 walkthrough)
+  - **Immigration** — F-1 visa employment rules (1 statute, full F-1 work walkthrough)
+  - **Traffic** — Chicago administrative hearings (1 statute, parking ticket dispute walkthrough + template)
+- **`prism-cli decide audit <id>`** — structured 12-bias audit report (Markdown)
+- **`prism-cli decide export <id> [-o path]`** — export decision as standalone Markdown file
+- **`prism-cli decide new --scenario <slug>`** — link a decision to a legal scenario at creation time
+- **LICENSE** (MIT, with explicit legal-advice disclaimer)
+- **`.github/workflows/test.yml`** — CI runs all three test layers on Python 3.10/3.11/3.12 every push
+- **`CONTRIBUTING.md`** — explains how to add scenarios via the skill or by hand
+- **README badges** — tests status, Python version, license
+- **`docs/demo-video.md`** — shot-by-shot 3-minute script for YouTube submission
+
+### Changed
+- `seed/__init__.py` now imports all 9 domain modules; `scaffolded.py` is a no-op stub kept for backwards compatibility
+
 ## Day 5 — May 30 — Polish & calibration
 
 ### Added

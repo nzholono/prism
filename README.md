@@ -1,5 +1,9 @@
 # Prism
 
+[![tests](https://github.com/nzholono/prism/actions/workflows/test.yml/badge.svg)](https://github.com/nzholono/prism/actions/workflows/test.yml)
+[![python](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org)
+[![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 A framework for reasoning about **legal and ethical decisions in Illinois** — through three lenses.
 
 When you face a difficult situation (your landlord keeps the deposit, a cop pulls you over, your employer underpays you), Prism shows you:
