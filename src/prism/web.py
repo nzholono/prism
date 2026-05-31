@@ -233,33 +233,17 @@ def _page(title: str, body: str) -> str:
 
 
 def _markdown_to_html(md: str) -> str:
-    """Very small markdown → HTML so we don't need a markdown dependency."""
-    out_lines: list[str] = []
-    in_code = False
-    for raw_line in md.splitlines():
-        line = raw_line.rstrip()
-        if line.startswith("```"):
-            if in_code:
-                out_lines.append("</pre>")
-                in_code = False
-            else:
-                out_lines.append("<pre>")
-                in_code = True
-            continue
-        if in_code:
-            out_lines.append(line)
-            continue
-        if line.startswith("## "):
-            out_lines.append(f"<h3>{line[3:]}</h3>")
-        elif line.startswith("# "):
-            out_lines.append(f"<h2>{line[2:]}</h2>")
-        elif line.startswith("- "):
-            out_lines.append(f"<li>{line[2:]}</li>")
-        elif not line:
-            out_lines.append("<br>")
-        else:
-            out_lines.append(f"<p>{line}</p>")
-    return "\n".join(out_lines)
+    """Convert markdown to HTML using the `markdown` library.
+
+    Supports headings, lists, bold/italic, links, fenced code blocks, and
+    tables — much better than the hand-rolled version that came before.
+    """
+    import markdown as md_lib
+
+    return md_lib.markdown(
+        md,
+        extensions=["extra", "sane_lists", "tables", "fenced_code", "nl2br"],
+    )
 
 
 def create_app(pharos_url: str = "http://127.0.0.1:8000") -> FastAPI:

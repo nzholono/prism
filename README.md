@@ -56,7 +56,7 @@ uv run prism-mcp
 
 ## Features
 
-### Legal lens — 10 Illinois domains
+### Legal lens — 13 Illinois domains
 
 **Tier 1 (deep coverage with multiple scenarios + walkthroughs):**
 - **Tenant rights** — security deposits, eviction notices, repairs, Chicago RLTO
@@ -71,6 +71,9 @@ uv run prism-mcp
 - Mental health rights (involuntary commitment, MH&DDC Act)
 - Traffic & vehicle (tickets, accidents, towing)
 - Criminal records & expungement (Illinois Criminal Identification Act)
+- LGBTQ+ rights (Illinois Human Rights Act, name & gender marker changes)
+- Family law basics (orders of protection, emancipation)
+- Voter rights (Illinois Election Code, same-day registration, ID rules)
 
 ### Ethical lens — 4 frameworks
 
@@ -171,7 +174,10 @@ See `docs/testing.md` for the full strategy.
 | [`docs/architecture.md`](docs/architecture.md) | Architecture explained, with Mermaid diagrams |
 | [`docs/testing.md`](docs/testing.md) | Test strategy: unit / contract / integration |
 | [`docs/demo.md`](docs/demo.md) | Walkthrough scenario for live demo |
+| [`docs/demo-video.md`](docs/demo-video.md) | Shot-by-shot script for a 3-minute YouTube demo |
+| [`docs/articles/`](docs/articles/) | Long-form educational articles (how IL law is organized, calibration, etc.) |
 | [`CHANGELOG.md`](CHANGELOG.md) | Day-by-day build log |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | How to add scenarios and contribute |
 
 ## Disclaimer
 

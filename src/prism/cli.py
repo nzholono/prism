@@ -95,6 +95,51 @@ def stats(
 
 
 @app.command()
+def compare(
+    slug_a: str = typer.Argument(..., help="First scenario slug"),
+    slug_b: str = typer.Argument(..., help="Second scenario slug"),
+) -> None:
+    """Compare two scenarios side-by-side, with their applicable statutes."""
+    client = _client()
+    try:
+        sc_a = client.get_scenario(slug_a)
+        sc_b = client.get_scenario(slug_b)
+    except Exception as exc:
+        console.print(f"[red]Error: {exc}[/red]")
+        raise typer.Exit(code=1)
+
+    table = Table(title=f"Comparing scenarios", show_lines=True)
+    table.add_column(sc_a.title, overflow="fold", max_width=60)
+    table.add_column(sc_b.title, overflow="fold", max_width=60)
+
+    table.add_row(sc_a.description_md[:300] + ("…" if len(sc_a.description_md) > 300 else ""),
+                  sc_b.description_md[:300] + ("…" if len(sc_b.description_md) > 300 else ""))
+
+    cites_a = "\n".join(f"• {s.citation}" for s in sc_a.statutes) or "(none)"
+    cites_b = "\n".join(f"• {s.citation}" for s in sc_b.statutes) or "(none)"
+    table.add_row(f"[bold]Statutes[/bold]\n{cites_a}", f"[bold]Statutes[/bold]\n{cites_b}")
+
+    has_template_a = "✓ has template letter" if sc_a.template_md else "—"
+    has_template_b = "✓ has template letter" if sc_b.template_md else "—"
+    table.add_row(has_template_a, has_template_b)
+
+    console.print(table)
+
+    # Show shared statutes
+    cites_set_a = {s.citation for s in sc_a.statutes}
+    cites_set_b = {s.citation for s in sc_b.statutes}
+    shared = cites_set_a & cites_set_b
+    if shared:
+        console.print(f"\n[cyan]Shared statutes:[/cyan] {', '.join(sorted(shared))}")
+    only_a = cites_set_a - cites_set_b
+    only_b = cites_set_b - cites_set_a
+    if only_a:
+        console.print(f"[dim]Only in {sc_a.slug}:[/dim] {', '.join(sorted(only_a))}")
+    if only_b:
+        console.print(f"[dim]Only in {sc_b.slug}:[/dim] {', '.join(sorted(only_b))}")
+
+
+@app.command()
 def search(query: str = typer.Argument(..., help="Text to search for")) -> None:
     """Search statutes and scenarios for the given text."""
     client = _client()

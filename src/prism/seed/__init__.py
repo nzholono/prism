@@ -21,12 +21,15 @@ from prism.seed import (
     criminal_record,
     employment,
     ethical,
+    family,
     healthcare,
     immigration,
+    lgbtq,
     mental_health,
     police,
     tenant,
     traffic,
+    voter,
 )
 
 
@@ -44,3 +47,6 @@ def seed_all(conn: sqlite3.Connection) -> None:
     immigration.seed(conn)
     traffic.seed(conn)
     criminal_record.seed(conn)
+    lgbtq.seed(conn)
+    family.seed(conn)
+    voter.seed(conn)

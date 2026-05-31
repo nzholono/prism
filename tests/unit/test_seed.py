@@ -17,12 +17,15 @@ from prism.seed import (
     criminal_record,
     employment,
     ethical,
+    family,
     healthcare,
     immigration,
+    lgbtq,
     mental_health,
     police,
     tenant,
     traffic,
+    voter,
 )
 
 
@@ -38,6 +41,9 @@ ALL_DOMAIN_MODULES = [
     immigration,
     traffic,
     criminal_record,
+    lgbtq,
+    family,
+    voter,
 ]
 
 

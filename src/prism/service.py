@@ -137,46 +137,76 @@ def get_scenario(conn: sqlite3.Connection, slug: str) -> Scenario | None:
 
 
 def search(conn: sqlite3.Connection, query: str, limit: int = 20) -> list[SearchHit]:
+    """Cross-domain text search ranked by simple relevance.
+
+    Matches in title weight more heavily than matches in body. Scenarios
+    rank above statutes when scores tie (more user-actionable).
+    """
     if not query.strip():
         return []
     like = f"%{query}%"
-    hits: list[SearchHit] = []
+    q_lower = query.lower()
+
+    scored: list[tuple[float, SearchHit]] = []
 
     for r in conn.execute(
-        "SELECT st.id, st.title, st.summary, d.slug AS domain_slug "
+        "SELECT st.id, st.title, st.summary, st.body_md, d.slug AS domain_slug "
         "FROM statutes st JOIN domains d ON d.id = st.domain_id "
-        "WHERE st.title LIKE ? OR st.summary LIKE ? OR st.body_md LIKE ? "
-        "LIMIT ?",
-        (like, like, like, limit),
+        "WHERE st.title LIKE ? OR st.summary LIKE ? OR st.body_md LIKE ?",
+        (like, like, like),
     ).fetchall():
-        hits.append(
+        score = _relevance(q_lower, title=r["title"], body=(r["summary"] or "") + " " + (r["body_md"] or ""))
+        # statutes get a slight penalty so scenarios float up
+        score -= 0.5
+        scored.append((
+            score,
             SearchHit(
                 kind="statute",
                 id=r["id"],
                 title=r["title"],
                 snippet=_excerpt(r["summary"], query),
                 domain_slug=r["domain_slug"],
-            )
-        )
+            ),
+        ))
 
     for r in conn.execute(
-        "SELECT s.id, s.title, s.description_md, d.slug AS domain_slug "
+        "SELECT s.id, s.title, s.description_md, s.walkthrough_md, d.slug AS domain_slug "
         "FROM scenarios s JOIN domains d ON d.id = s.domain_id "
-        "WHERE s.title LIKE ? OR s.description_md LIKE ? OR s.walkthrough_md LIKE ? "
-        "LIMIT ?",
-        (like, like, like, limit),
+        "WHERE s.title LIKE ? OR s.description_md LIKE ? OR s.walkthrough_md LIKE ?",
+        (like, like, like),
     ).fetchall():
-        hits.append(
+        score = _relevance(q_lower, title=r["title"], body=(r["description_md"] or "") + " " + (r["walkthrough_md"] or ""))
+        scored.append((
+            score,
             SearchHit(
                 kind="scenario",
                 id=r["id"],
                 title=r["title"],
                 snippet=_excerpt(r["description_md"], query),
                 domain_slug=r["domain_slug"],
-            )
-        )
+            ),
+        ))
 
-    return hits[:limit]
+    # Sort descending by score, then return top N
+    scored.sort(key=lambda t: -t[0])
+    return [hit for _, hit in scored[:limit]]
+
+
+def _relevance(query: str, *, title: str, body: str) -> float:
+    """Simple relevance score: title matches weight more, repeated matches add up."""
+    title_l = title.lower()
+    body_l = body.lower()
+    score = 0.0
+    # exact title match is gold
+    if query in title_l:
+        score += 5.0
+        # whole-word match in title even better
+        if f" {query} " in f" {title_l} ":
+            score += 2.0
+    # body matches scale with frequency, capped
+    body_hits = body_l.count(query)
+    score += min(body_hits, 5) * 0.5
+    return score
 
 
 def _excerpt(text: str, query: str, width: int = 80) -> str:

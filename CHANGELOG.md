@@ -2,6 +2,34 @@
 
 All notable changes to Prism. Most recent first.
 
+## Day 10 — May 31 — Deeper Tier-2 + tech polish
+
+### Added
+- **4 new scenarios** in existing Tier-2 domains:
+  - `campus/academic-integrity-charge` — cheating accusation walkthrough, advisor rights, appeal process
+  - `healthcare/insurance-claim-denied` — internal/external appeal process, Mental Health Parity, full appeal letter template
+  - `immigration/opt-job-loss` — 90/150 day OPT unemployment rules, SEVP Portal updates, options before hitting the cap
+  - `mental_health/voluntary-admission-rights` — 5-day rule, right to refuse medication, Equip for Equality contacts
+- **`prism-cli compare <slug-a> <slug-b>`** — side-by-side scenario comparison with shared/unique statutes called out.
+- **Web Markdown rendering** upgraded to the standard `markdown` library (extensions: extra, sane_lists, tables, fenced_code, nl2br). Scenarios and templates now render properly.
+- **Search relevance ranking** in `service.search()` — title matches weight more than body matches, repeated matches count up to a cap, scenarios float above statutes at tie.
+
+### Dependencies
+- Added `markdown>=3.6`.
+
+## Day 9 — May 30 (very late) — Three more domains + educational articles
+
+### Added
+- **3 new Tier-2 domains** (now 13 domains total):
+  - **lgbtq** — Illinois Human Rights Act protections + name & gender-marker change walkthrough (court name change, IDPH gender marker, SSA, passport, driver's license)
+  - **family** — Illinois Domestic Violence Act + order-of-protection walkthrough (24-hour emergency order, free advocates, no filing fee)
+  - **voter** — Illinois Election Code + "turned away at the polls" walkthrough (same-day registration, provisional ballots, Election Protection hotline)
+- **3 long-form educational articles** in `docs/articles/`:
+  - **how-illinois-law-is-organized** — Federal / state / local layers, how to read citations like 765 ILCS 710/1
+  - **when-to-hire-a-lawyer** — Rule-of-thumb table, free legal aid directory, lawyer-interview questions
+  - **calibration-training-judgment** — How to use Prism's decision journal for actual calibration training; references Tetlock and Kahneman
+- README updated with new domains and articles section.
+
 ## Day 8 — May 30 (late night) — More depth, new domain
 
 ### Added

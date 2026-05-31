@@ -61,6 +61,87 @@ STATUTES = [
 
 SCENARIOS = [
     {
+        "slug": "opt-job-loss",
+        "title": "I lost my OPT job — what happens to my status?",
+        "linked_statutes": ["8 CFR § 214.2(f)"],
+        "description_md": (
+            "You're on OPT and you just lost your job — laid off, fired, or "
+            "the company shut down. The OPT unemployment clock is now "
+            "running. **You have 90 days** of unemployment during initial "
+            "OPT, **150 days** total with STEM extension. Going over means "
+            "status loss. Acting in the first week makes the difference."
+        ),
+        "walkthrough_md": (
+            "## What to do — first week\n\n"
+            "1. **Update SEVP Portal immediately.** Log in to "
+            "studyinthestates.dhs.gov SEVP Portal and record the employment "
+            "end date. Don't wait — DSO sees the same data.\n\n"
+            "2. **Email your DSO.** Tell them you've lost your OPT job and "
+            "the date. Ask them to confirm your unemployment count and any "
+            "remaining days. Get this in writing.\n\n"
+            "3. **Start counting your days.** Unemployment days count from "
+            "the day after employment ends. Track in a calendar — "
+            "**accumulating over 90 days (or 150 with STEM) triggers "
+            "status loss**.\n\n"
+            "4. **Cobra / health insurance.** Federal COBRA gives you 60 "
+            "days to elect continuation of your employer health plan. "
+            "Expensive but a real bridge. Also check Healthcare.gov for "
+            "marketplace plans (job loss is a qualifying event).\n\n"
+            "5. **File for unemployment insurance** if you were laid off (not "
+            "fired for cause and not a contractor). F-1 OPT holders ARE "
+            "eligible for IL unemployment if otherwise qualified — apply at "
+            "ides.illinois.gov.\n\n"
+            "## What to do — first 60 days\n\n"
+            "6. **Job search like it's your job.** Network, apply broadly. "
+            "Note that the new role must be:\n"
+            "   - **Related to your degree field**.\n"
+            "   - At least 20 hours/week.\n"
+            "   - With an actual employer (or as a contractor with "
+            "documented contracts — gray area, get DSO sign-off).\n\n"
+            "7. **Self-employment counts**, but you need to document: "
+            "business registration (LLC), bills/invoices, work in your "
+            "field. Get DSO advice before counting self-employment.\n\n"
+            "8. **Volunteer work in your field counts as employment** if it "
+            "involves real work (not just observation). Get a letter from "
+            "the org documenting hours and role.\n\n"
+            "9. **Multiple part-time positions are OK** if combined they're "
+            "20+ hours/week and all in your field.\n\n"
+            "10. **For STEM students:** if you're approaching the end of "
+            "your initial 12-month OPT and don't have a job, apply for the "
+            "STEM extension while still employed (you need an E-Verify "
+            "employer to qualify).\n\n"
+            "## What to do — approaching 90 days unemployed\n\n"
+            "11. **Talk to your DSO and an immigration lawyer.** Options:\n"
+            "   - **Change of status** to another visa category (H-1B, "
+            "B-1/B-2, F-1 for new program).\n"
+            "   - **Reinstatement** if you fall out of status (hard to win).\n"
+            "   - **Departure and re-entry** in a different status.\n"
+            "   - **Apply to a new degree program** — start of new I-20 "
+            "creates new status.\n\n"
+            "12. **60-day grace period after OPT ends** (whether due to "
+            "unemployment limit or end of authorized period) — you can "
+            "stay in the U.S. to wrap up affairs, but cannot work.\n\n"
+            "## What NOT to do\n\n"
+            "- ❌ Continue working off the books / unauthorized. Catastrophic "
+            "consequences for status.\n"
+            "- ❌ Lie on the SEVP Portal or to your DSO. They are required "
+            "to report; you destroy your own credibility for future relief.\n"
+            "- ❌ Ignore the unemployment days. They aren't pause-able.\n"
+            "- ❌ Try to fix status issues yourself. Talk to an immigration "
+            "attorney for anything non-trivial.\n\n"
+            "## Free help\n\n"
+            "- **DePaul OISS** (or your school's equivalent): go.depaul.edu/oiss\n"
+            "- **National Immigrant Justice Center**: (312) 660-1370\n"
+            "- **AILA immigration lawyer search**: ailalawyer.com\n"
+            "- **Illinois Department of Employment Security (unemployment)**: "
+            "ides.illinois.gov\n\n"
+            "---\n\n"
+            "*This is reference material, not legal advice. Immigration is "
+            "high-stakes — engage your DSO and a lawyer early.*"
+        ),
+        "template_md": None,
+    },
+    {
         "slug": "f1-employment-rules",
         "title": "What can I do (and not do) for work on an F-1 visa?",
         "linked_statutes": ["8 CFR § 214.2(f)"],
