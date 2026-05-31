@@ -127,6 +127,85 @@ STATUTES = [
 
 SCENARIOS = [
     {
+        "slug": "subscription-wont-cancel",
+        "title": "A company won't let me cancel my subscription",
+        "linked_statutes": ["815 ILCS 505/2"],
+        "description_md": (
+            "You signed up for a gym, streaming service, or 'free trial' "
+            "that turned into a monthly charge. Now you're trying to cancel "
+            "and the company has hidden the cancellation button, demands a "
+            "phone call during business hours, or just charges you again. "
+            "Illinois has laws against this — it's often a violation of the "
+            "Consumer Fraud Act."
+        ),
+        "walkthrough_md": (
+            "## What to do (in order)\n\n"
+            "1. **Try to cancel through the normal channels first**, but "
+            "**document every step** with screenshots. Date, time, what you "
+            "clicked, what page you got to.\n\n"
+            "2. **Send a written cancellation request** by email (saves the "
+            "trail). Include:\n"
+            "   - Your account info.\n"
+            "   - Clear request: 'I am cancelling effective immediately.'\n"
+            "   - Demand they stop charging and confirm in writing.\n\n"
+            "3. **Dispute the charge with your credit card or bank.** This "
+            "is the most effective tool:\n"
+            "   - Call the number on the back of your card.\n"
+            "   - Tell them you cancelled and the company keeps charging.\n"
+            "   - File a chargeback for unauthorized recurring charges.\n"
+            "   - Ask them to **block future charges from that merchant**.\n\n"
+            "4. **If the company used 'dark patterns'** (hidden cancellation, "
+            "misleading 'free trial' that auto-renews, repeated upsells in "
+            "the cancel flow), it likely violates Illinois Consumer Fraud "
+            "Act (815 ILCS 505/2) and the federal FTC 'click-to-cancel' "
+            "rules.\n\n"
+            "5. **File complaints:**\n"
+            "   - **Illinois Attorney General Consumer Fraud Bureau**: "
+            "(800) 386-5438 or illinoisattorneygeneral.gov/consumers.\n"
+            "   - **Federal Trade Commission**: reportfraud.ftc.gov.\n"
+            "   - **Better Business Bureau**: bbb.org (less powerful, but "
+            "free and public, and companies often respond to BBB faster "
+            "than to consumers).\n\n"
+            "6. **For ongoing fraud**, consider:\n"
+            "   - Closing the card and getting a new number (last resort — "
+            "may break other auto-pays).\n"
+            "   - **Small claims court** for refund of unauthorized charges. "
+            "Under the Consumer Fraud Act you can recover the charges plus "
+            "attorney's fees — making lawyers willing to take strong cases.\n\n"
+            "## Free help\n\n"
+            "- **Illinois AG Consumer Fraud**: (800) 386-5438\n"
+            "- **FTC Consumer Protection**: (877) FTC-HELP\n"
+            "- **CARPLS**: (312) 738-9200\n\n"
+            "---\n\n"
+            "*This is reference material, not legal advice.*"
+        ),
+        "template_md": (
+            "## Email cancellation script\n\n"
+            "```\n"
+            "Subject: Cancellation of account #{{account}} — written notice\n\n"
+            "To {{company billing@}}:\n\n"
+            "I am writing to cancel my subscription effective immediately.\n\n"
+            "Account holder: {{your name}}\n"
+            "Account number / email: {{account}}\n"
+            "Date of this request: {{date}}\n\n"
+            "I have attempted to cancel through your website but was unable "
+            "to complete the process because {{reason: 'no cancel button found' / "
+            "'site looped to upsell pages' / etc.}}\n\n"
+            "Please:\n"
+            "1. Confirm cancellation in writing within 5 business days.\n"
+            "2. Process no further charges to my account.\n"
+            "3. Refund any charges made after this notice.\n\n"
+            "If charges continue, I will pursue all available remedies "
+            "including dispute through my card issuer, a complaint with the "
+            "Illinois Attorney General's Consumer Fraud Bureau, and an action "
+            "under the Illinois Consumer Fraud and Deceptive Business Practices "
+            "Act (815 ILCS 505).\n\n"
+            "Sincerely,\n"
+            "{{your name}}\n"
+            "```\n"
+        ),
+    },
+    {
         "slug": "debt-collector-harassment",
         "title": "A debt collector is harassing me",
         "linked_statutes": ["15 U.S.C. § 1692 (FDCPA)"],

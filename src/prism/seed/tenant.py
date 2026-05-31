@@ -164,6 +164,89 @@ STATUTES = [
 
 SCENARIOS = [
     {
+        "slug": "breaking-lease-early",
+        "title": "I need to break my lease early",
+        "linked_statutes": ["Chi. Mun. Code 5-12-080"],
+        "description_md": (
+            "Job in another city, medical situation, abusive household, "
+            "domestic violence — you need out of your lease before it ends. "
+            "Illinois protects renters in some specific situations, and the "
+            "Chicago RLTO has stronger rules. The penalty for just walking "
+            "away can be steep, so know your options first."
+        ),
+        "walkthrough_md": (
+            "## What to do\n\n"
+            "1. **Re-read your lease for early-termination clauses.** Some "
+            "leases let you pay a fixed buyout (typically 2 months rent). "
+            "If yours does, that's usually the cleanest path.\n\n"
+            "2. **Identify whether a legal protection applies:**\n"
+            "   - **Active military service** — federal SCRA lets you "
+            "terminate without penalty when called to active duty.\n"
+            "   - **Domestic violence** — Illinois VESSA (Victims' Economic "
+            "Security and Safety Act) lets you terminate after written notice "
+            "plus documentation (police report, order of protection, "
+            "court record).\n"
+            "   - **Uninhabitable conditions** — if landlord won't fix major "
+            "issues, see the 'repairs not made' scenario; you may have a "
+            "right to terminate.\n"
+            "   - **Constructive eviction** — landlord's actions made the "
+            "unit unusable. High bar; talk to a lawyer.\n\n"
+            "3. **Otherwise, negotiate.** Most landlords prefer a paying "
+            "replacement tenant over an empty unit. Offer to:\n"
+            "   - Find a qualified replacement tenant who will sign a new lease.\n"
+            "   - Pay 1-2 months as a buyout.\n"
+            "   - Forfeit your security deposit.\n"
+            "   Get any agreement in writing.\n\n"
+            "4. **Know about the duty to mitigate damages.** Illinois "
+            "landlords **must make reasonable efforts to re-rent** the unit. "
+            "If they leave it empty out of spite, that's not your problem. "
+            "Document any evidence they aren't trying (no listings, no showings).\n\n"
+            "5. **If you just walk away**, the landlord can sue for the "
+            "remaining rent owed (minus any rent they collected from a new "
+            "tenant after reasonable mitigation), keep your deposit, and "
+            "report you to a tenant-screening service. This will hurt future "
+            "rental applications for years.\n\n"
+            "6. **Send written notice** before vacating. Include your "
+            "forwarding address. Take dated photos of the empty, clean unit. "
+            "Return all keys. Document everything via certified mail.\n\n"
+            "## Free legal help\n\n"
+            "- **CARPLS**: (312) 738-9200\n"
+            "- **Lawyers' Committee for Better Housing**: lcbh.org\n"
+            "- **Illinois Coalition Against Domestic Violence**: ilcadv.org "
+            "(VESSA help)\n\n"
+            "---\n\n"
+            "*This is reference material, not legal advice.*"
+        ),
+        "template_md": (
+            "## Termination notice template (negotiated)\n\n"
+            "```\n"
+            "{{Your Name}}\n"
+            "{{Address}}\n"
+            "{{Date}}\n\n"
+            "{{Landlord Name}}\n"
+            "{{Address}}\n\n"
+            "SENT CERTIFIED MAIL\n\n"
+            "Re: Lease at {{unit address}}, dated {{lease date}}\n\n"
+            "Dear {{Landlord Name}},\n\n"
+            "I am writing to provide notice that I will be vacating the above "
+            "unit on {{vacate date}}, prior to the lease end date of "
+            "{{lease end date}}.\n\n"
+            "I propose the following terms:\n\n"
+            "1. I will pay {{X months}} of rent as a buyout (${{amount}}).\n"
+            "2. I forfeit my security deposit of ${{amount}}.\n"
+            "3. I will return all keys and leave the unit broom-clean.\n"
+            "4. The lease will be considered fully terminated as of "
+            "{{vacate date}}, with no further obligations on either side.\n\n"
+            "Please respond in writing by {{date}} to confirm these terms or "
+            "propose alternatives. I am also willing to help find a "
+            "replacement tenant.\n\n"
+            "My forwarding address will be: {{address}}.\n\n"
+            "Sincerely,\n"
+            "{{Your Name}}\n"
+            "```\n"
+        ),
+    },
+    {
         "slug": "deposit-not-returned",
         "title": "Landlord didn't return my security deposit",
         "linked_statutes": [

@@ -143,6 +143,73 @@ STATUTES = [
 
 SCENARIOS = [
     {
+        "slug": "non-compete-agreement",
+        "title": "My employer wants me to sign a non-compete agreement",
+        "linked_statutes": [],
+        "description_md": (
+            "You've been offered a job (or are already in one) and the "
+            "employer is asking you to sign a non-compete agreement — a "
+            "promise not to work for competitors for some period after you "
+            "leave. Illinois passed strong limits on these in 2022. Most "
+            "non-competes in Illinois are now invalid by law."
+        ),
+        "walkthrough_md": (
+            "## Quick answer\n\n"
+            "As of January 1, 2022, the **Illinois Freedom to Work Act** "
+            "(820 ILCS 90) makes most non-compete agreements unenforceable. "
+            "Specifically:\n\n"
+            "- **Non-competes** are void if you earn **less than $75,000/year** "
+            "(threshold rises with inflation — currently around $80K+).\n"
+            "- **Non-solicitation agreements** are void if you earn less "
+            "than $45,000/year.\n"
+            "- For higher earners, the employer must give you at least "
+            "**14 calendar days to review** the agreement and **advise you "
+            "in writing** to consult a lawyer.\n"
+            "- The agreement must be supported by **adequate consideration** — "
+            "usually at least 2 years of continued employment OR a "
+            "meaningful bonus/raise.\n\n"
+            "## What to do\n\n"
+            "1. **Don't sign it on the spot.** Even if the employer pressures "
+            "you, the law requires they give you 14 days to review for "
+            "high-earner agreements.\n\n"
+            "2. **Check the income threshold.** If you'll earn under "
+            "$75K/year and they hand you a non-compete, the entire "
+            "non-compete is void. Sign or don't sign — they can't enforce it.\n\n"
+            "3. **Read the geographic scope.** Even valid non-competes must "
+            "be 'reasonable' in scope. 'You can't work for any tech "
+            "company anywhere in the world for 5 years' is not enforceable.\n\n"
+            "4. **Read the time period.** Most Illinois courts won't enforce "
+            "more than 1-2 years.\n\n"
+            "5. **Note the activities restricted.** A non-compete for the "
+            "exact role you do is more enforceable than one that bars all "
+            "industry employment.\n\n"
+            "6. **Negotiate** if the agreement seems overbroad. Most "
+            "employers will modify scope, time, geography, or activities. "
+            "Ask for:\n"
+            "   - Shorter duration (6-12 months).\n"
+            "   - Narrower geography (city/state, not nationwide).\n"
+            "   - Activities limited to your specific role.\n"
+            "   - Pay during the restricted period (sometimes called "
+            "'garden leave').\n\n"
+            "7. **For technical employees**, ask about which side projects, "
+            "consulting, open-source work are covered. Get carveouts in writing.\n\n"
+            "8. **If you're being asked to sign as a condition of getting an "
+            "offer you already negotiated**, push back. The change in terms is "
+            "negotiable.\n\n"
+            "9. **If you've already left a job under a non-compete and you're "
+            "facing enforcement**, talk to an employment lawyer immediately. "
+            "Illinois courts often refuse to enforce these even when valid "
+            "on paper.\n\n"
+            "## Free legal help\n\n"
+            "- **Illinois Attorney General Workplace Rights Bureau**: (844) 740-5076\n"
+            "- **Chicago Bar Association referral service**: (312) 554-2001\n"
+            "- **Illinois State Bar Association lawyer referral**: (800) 922-8757\n\n"
+            "---\n\n"
+            "*This is reference material, not legal advice.*"
+        ),
+        "template_md": None,
+    },
+    {
         "slug": "unpaid-wages",
         "title": "My employer didn't pay me for hours I worked",
         "linked_statutes": ["820 ILCS 105/4", "820 ILCS 115/14"],

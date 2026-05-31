@@ -2,6 +2,20 @@
 
 All notable changes to Prism. Most recent first.
 
+## Day 7 — May 30 (night) — Content depth
+
+### Added
+- **4 new scenarios** with full walkthroughs:
+  - tenant: **breaking-lease-early** (Illinois VESSA, SCRA, duty to mitigate, negotiation script)
+  - employment: **non-compete-agreement** (Illinois Freedom to Work Act of 2022 — most non-competes void below $75K income)
+  - police: **dui-traffic-stop** (what is and isn't voluntary; statutory summary suspension)
+  - consumer: **subscription-wont-cancel** (dark patterns, dispute process, IL Consumer Fraud Act remedy + email template)
+- **3 new bias detectors** — now **13 total**:
+  - **hindsight bias** — "I knew this would happen"
+  - **fundamental attribution error** — explaining behavior by character vs situation
+  - **halo effect** — one positive trait coloring all judgment
+- **Unit tests** for the three new detectors plus a 13-bias integration test.
+
 ## Day 6 — May 30 (late) — Expansion & professional polish
 
 ### Added

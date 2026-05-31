@@ -117,6 +117,72 @@ STATUTES = [
 
 SCENARIOS = [
     {
+        "slug": "dui-traffic-stop",
+        "title": "I was pulled over and the officer suspects DUI",
+        "linked_statutes": ["725 ILCS 5/107-14"],
+        "description_md": (
+            "An officer pulls you over after midnight on a Friday and asks "
+            "if you've been drinking. What you do in the next five minutes "
+            "will affect your case for the next year. Illinois DUI law is "
+            "complex, and your most important rights are also the most "
+            "counterintuitive."
+        ),
+        "walkthrough_md": (
+            "## In the moment\n\n"
+            "1. **Pull over safely. Hands visible on the wheel. Interior "
+            "lights on at night.** Wait for the officer to approach.\n\n"
+            "2. **License, registration, insurance — yes.** Required.\n\n"
+            "3. **'Have you been drinking?'** You are **not required to "
+            "answer**. Say: *'Officer, I'd prefer not to answer questions.'* "
+            "Lying ('No, nothing') is its own offense. Saying 'just a beer "
+            "with dinner' is evidence against you. **Silence is the safe "
+            "option.**\n\n"
+            "4. **Field sobriety tests are voluntary in Illinois.** Walk-the-"
+            "line, one-leg-stand, follow-the-pen. **You can refuse them.** "
+            "They are designed to produce evidence of impairment — even "
+            "sober people commonly fail. *'Officer, I respectfully decline "
+            "to perform field sobriety tests.'*\n\n"
+            "5. **Roadside breathalyzer (PBT) is also voluntary** in "
+            "Illinois pre-arrest. You can refuse with no automatic "
+            "consequence. Decline politely.\n\n"
+            "6. **If they arrest you anyway**, you'll be taken to the station "
+            "for a chemical test (breath, blood, or urine). **This is the "
+            "test that matters.** Refusing the post-arrest chemical test "
+            "triggers an automatic 1-year **statutory summary suspension** "
+            "of your license (first offense, no prior). A failed test (over "
+            "0.08) triggers a 6-month suspension.\n\n"
+            "7. **The refusal-vs-test question is genuinely hard.** Talk to "
+            "a DUI lawyer about your situation. Refusing avoids creating "
+            "BAC evidence; failing creates strong evidence against you. "
+            "Many lawyers advise refusing if you're impaired; testing if "
+            "you genuinely believe you're under 0.08.\n\n"
+            "8. **'I want a lawyer'** — say this clearly. Then say nothing "
+            "else.\n\n"
+            "9. **'I do not consent to any search'** of your car or person.\n\n"
+            "## After arrest\n\n"
+            "10. **You have 90 days** to request a hearing on the statutory "
+            "summary suspension. Don't miss this deadline — your lawyer "
+            "will need it to challenge the suspension.\n\n"
+            "11. **Get a DUI lawyer immediately.** Public defenders are "
+            "available if you can't afford one — request one at your first "
+            "court appearance.\n\n"
+            "12. **Do NOT post about the arrest on social media.** "
+            "Prosecutors check.\n\n"
+            "13. **Document everything you remember**: dispatch times, "
+            "what officers said, witnesses, your physical condition. Write "
+            "it down within 24 hours.\n\n"
+            "## Free / referral legal help\n\n"
+            "- **First Defense Legal Aid (Chicago, 24-hour)**: (800) LAW-REP-4\n"
+            "- **Cook County Public Defender**: (312) 603-0600\n"
+            "- **Illinois State Bar Lawyer Referral**: (800) 922-8757\n"
+            "- **NACDL (Nat'l Assoc. of Criminal Defense Lawyers)**: nacdl.org\n\n"
+            "---\n\n"
+            "*This is reference material, not legal advice. DUI consequences "
+            "are severe — get a lawyer immediately.*"
+        ),
+        "template_md": None,
+    },
+    {
         "slug": "police-stop",
         "title": "I was stopped by the police in Illinois",
         "linked_statutes": ["725 ILCS 5/107-14", "725 ILCS 5/103-2.1"],

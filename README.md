@@ -82,13 +82,13 @@ For any situation, Prism frames the choice through:
 
 Each framework comes with key questions to ask yourself.
 
-### Cognitive lens — decision journal + 10 bias detectors
+### Cognitive lens — decision journal + 13 bias detectors
 
 Log a decision *before* you know the outcome. Prism stores:
 - the situation, your options, what you chose
 - your reasoning, what you expect, confidence (0–100)
 
-…and runs ten bias detectors against your reasoning, flagging anything suspicious:
+…and runs thirteen bias detectors against your reasoning, flagging anything suspicious:
 
 | Bias | What it catches |
 | --- | --- |
@@ -102,6 +102,9 @@ Log a decision *before* you know the outcome. Prism stores:
 | Bandwagon | "Everyone does it" reasoning |
 | Framing | Heavy use of one frame (certainty / percentage / loss) |
 | Planning fallacy | "Quick and easy" with no buffer time |
+| Hindsight | Treating outcome as if it was knowable in advance |
+| Fundamental attribution | Explaining behavior by character, not situation |
+| Halo effect | One positive trait coloring overall judgment |
 
 **Calibration over time:** `prism-cli stats --calibration` shows whether your confidence has tracked reality. Are you overconfident? Underconfident? Do certain biases correlate with bad outcomes?
 

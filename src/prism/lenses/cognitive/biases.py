@@ -225,6 +225,81 @@ def detect_planning_fallacy(d: DecisionCreate) -> BiasResult:
     return None
 
 
+HINDSIGHT_PATTERNS = [
+    r"i (knew|always knew|saw)( this)? (would|was going to|coming)",
+    r"obviously( \w+){0,3} (was|were|going to|would)",
+    r"in retrospect",
+    r"of course (it|he|she|they)",
+    r"should have (known|seen|expected)",
+]
+
+
+def detect_hindsight(d: DecisionCreate) -> BiasResult:
+    """Reasoning that assumes the outcome was knowable in advance."""
+    text = _haystack(d)
+    for pattern in HINDSIGHT_PATTERNS:
+        m = re.search(pattern, text)
+        if m:
+            return (
+                "hindsight_bias",
+                f"Phrase '{m.group(0)}' suggests treating the outcome as "
+                "if it was knowable in advance. Was it really, before this "
+                "happened? Or are you reconstructing certainty after the fact?",
+            )
+    return None
+
+
+ATTRIBUTION_PATTERNS = [
+    r"(he|she|they) (is|are) just",
+    r"(typical|so typical of)",
+    r"that'?s who (he|she|they) (is|are)",
+    r"(lazy|selfish|stupid|crazy|incompetent|toxic) person",
+    r"(always|never) (does|do|listens|listen)",
+]
+
+
+def detect_fundamental_attribution(d: DecisionCreate) -> BiasResult:
+    """Explaining someone's behavior by their character, not their situation."""
+    text = _haystack(d)
+    for pattern in ATTRIBUTION_PATTERNS:
+        m = re.search(pattern, text)
+        if m:
+            return (
+                "fundamental_attribution_error",
+                f"Phrase '{m.group(0)}' attributes behavior to character "
+                "rather than situation. What pressures or constraints might "
+                "be driving the other person's behavior? You usually explain "
+                "your own bad behavior by circumstances — extend the same "
+                "courtesy.",
+            )
+    return None
+
+
+HALO_PATTERNS = [
+    r"(he|she|they) seem(s|ed)? (nice|great|smart|reliable|trustworthy)",
+    r"(he|she|they) (came|seemed) (highly )?recommended",
+    r"i (trust|like) (him|her|them)",
+    r"good vibes",
+    r"(he|she|they) (look|looks|looked) (the part|professional|legit)",
+]
+
+
+def detect_halo(d: DecisionCreate) -> BiasResult:
+    """Letting one positive trait color overall judgment without evidence."""
+    text = _haystack(d)
+    for pattern in HALO_PATTERNS:
+        m = re.search(pattern, text)
+        if m:
+            return (
+                "halo_effect",
+                f"Phrase '{m.group(0)}' uses a general impression "
+                "('nice / seems great / trustworthy') to settle a "
+                "specific question. The two don't follow from each other — "
+                "what specific evidence supports the specific decision?",
+            )
+    return None
+
+
 ALL_DETECTORS: list[Detector] = [
     detect_sunk_cost,
     detect_anchoring,
@@ -236,6 +311,9 @@ ALL_DETECTORS: list[Detector] = [
     detect_bandwagon,
     detect_framing,
     detect_planning_fallacy,
+    detect_hindsight,
+    detect_fundamental_attribution,
+    detect_halo,
 ]
 
 
