@@ -289,7 +289,7 @@ def create_app(pharos_url: str = "http://127.0.0.1:8000") -> FastAPI:
             "<p><strong>Ethical lens</strong> — Four frameworks (utilitarian, "
             "deontological, virtue, care) framing the same choice differently.</p>"
             "<p><strong>Cognitive lens</strong> — A decision journal that flags "
-            "ten cognitive biases before you commit.</p>"
+            "fifteen cognitive biases before you commit.</p>"
             "</div>"
             "<div class='card'><h3>Start here</h3>"
             "<ul>"
