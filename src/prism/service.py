@@ -11,7 +11,7 @@ import json
 import sqlite3
 from datetime import datetime
 
-from prism.lenses.cognitive import biases
+from prism.lenses.cognitive import audit, biases
 from prism.models import (
     BiasFlag,
     Decision,
@@ -318,6 +318,24 @@ def create_decision(conn: sqlite3.Connection, d: DecisionCreate) -> Decision:
             (decision_id, slug, evidence),
         )
     conn.commit()
+
+    # Audit-log every detector run so we can later inspect (by hand or by feeding
+    # to Claude Code) what biases the regex rules might be missing. Suggestion
+    # from Prof. Pitcher in CSC299 Discord.
+    try:
+        audit.log_bias_run(
+            situation=d.situation,
+            options=d.options,
+            chosen=d.chosen,
+            reasoning=d.reasoning,
+            expected_outcome=d.expected_outcome,
+            confidence=d.confidence,
+            flags_found=flags,
+        )
+    except OSError:
+        # don't let a logging failure break decision creation
+        pass
+
     return get_decision(conn, decision_id)  # type: ignore[return-value]
 
 

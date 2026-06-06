@@ -2,6 +2,19 @@
 
 All notable changes to Prism. Most recent first.
 
+## Day 11 — June 4 — Bias-detector audit log (Prof. Pitcher feedback)
+
+### Added
+- **Bias-detector audit log** (`src/prism/lenses/cognitive/audit.py`) — every time `service.create_decision` runs, the reasoning text and the detector output are appended to `~/.prism/bias_audit.jsonl`. The log is a feedback loop on the regex-based detectors: it lets the design be evaluated by hand or by feeding the log into Claude Code with a prompt like *"which biases did the regex miss?"*
+- **`prism-cli decide audit-log`** — view recent entries with `--tail N`, export full log with `-o path.jsonl`, or print raw JSONL with `--raw`.
+- **5 unit tests** for the audit log (file creation, append-only JSONL, situation/flags persisted, empty-log behavior, roundtrip).
+- **conftest fixture** redirects the audit log to a tmp path during tests so the user's real `~/.prism/bias_audit.jsonl` is never polluted.
+
+### Why
+Prof. Pitcher's feedback on the original design: *"regex matching can be fragile and is a long way from a semantic search. You could try having your system record the user queries and the results of regex matching to a log file, then go back into Claude Code and ask it to look at the user queries and regex-based results to see if it can do better with finding matches. Just to get a sense of what is being missed."*
+
+This is exactly what the audit log enables.
+
 ## Day 10 — May 31 — Deeper Tier-2 + tech polish
 
 ### Added

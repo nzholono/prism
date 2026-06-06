@@ -30,6 +30,17 @@ def pytest_collection_modifyitems(config, items):
             item.add_marker(pytest.mark.integration)
 
 
+@pytest.fixture(autouse=True)
+def _redirect_bias_audit_log(tmp_path, monkeypatch):
+    """Send the bias audit log to a temp file during every test so the
+    user's real ~/.prism/bias_audit.jsonl isn't polluted."""
+    from prism.lenses.cognitive import audit
+
+    log_file = tmp_path / "bias_audit.jsonl"
+    monkeypatch.setattr(audit, "BIAS_AUDIT_LOG_PATH", log_file)
+    yield log_file
+
+
 @pytest.fixture
 def app():
     """Bare FastAPI app with an in-memory DB. Use `http` if you need lifespan."""

@@ -114,6 +114,8 @@ Log a decision *before* you know the outcome. Prism stores:
 
 **Calibration over time:** `prism-cli stats --calibration` shows whether your confidence has tracked reality. Are you overconfident? Underconfident? Do certain biases correlate with bad outcomes?
 
+**Detector audit log:** every detector run is appended to `~/.prism/bias_audit.jsonl` (reasoning text + which biases were flagged). View with `prism-cli decide audit-log`, export with `-o path.jsonl`, then feed to Claude Code with a prompt like *"which biases did the regex miss?"* — closing the loop on the detector design. (Suggested by Prof. Pitcher in CSC299 Discord, June 4, 2026.)
+
 ## MCP server — Prism inside Claude Code
 
 `uv run prism-mcp` exposes the legal/ethical/cognitive layers over MCP so Claude Code (or any MCP-aware tool) can query Prism's curated database. Tools:

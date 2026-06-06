@@ -455,6 +455,81 @@ def decide_audit(decision_id: int) -> None:
     console.print(Markdown("\n".join(audit_lines)))
 
 
+@decide_app.command("audit-log")
+def decide_audit_log(
+    tail: int = typer.Option(
+        10, "--tail", "-n", help="Show last N entries (0 = all)."
+    ),
+    output: Optional[str] = typer.Option(
+        None, "-o", help="Export full JSONL log to this file."
+    ),
+    raw: bool = typer.Option(
+        False, "--raw", help="Print raw JSONL (good for piping)."
+    ),
+) -> None:
+    """View or export the bias-detector audit log.
+
+    Every time a decision is logged, the reasoning text and the
+    detector output are appended to ~/.prism/bias_audit.jsonl. This command
+    lets you inspect that log — by hand or by feeding it to Claude Code with
+    a prompt like "look at these entries and tell me which biases the
+    regex detectors missed."
+
+    The audit log is a feedback loop on the detector design (suggested by
+    Prof. Pitcher in CSC299 Discord on June 4, 2026).
+    """
+    from prism.lenses.cognitive.audit import BIAS_AUDIT_LOG_PATH, read_log
+
+    if output:
+        if not BIAS_AUDIT_LOG_PATH.exists():
+            console.print("[yellow]No audit log yet — log some decisions first.[/yellow]")
+            raise typer.Exit(code=1)
+        from pathlib import Path as _P
+
+        _P(output).write_bytes(BIAS_AUDIT_LOG_PATH.read_bytes())
+        console.print(f"[green]Exported {BIAS_AUDIT_LOG_PATH.stat().st_size} bytes to[/green] {output}")
+        console.print(
+            f"\n[dim]Now feed this to Claude Code:\n"
+            f"  'Look at {output}. For each entry, tell me which biases "
+            f"the regex detectors flagged, and which they missed.'[/dim]"
+        )
+        return
+
+    entries = read_log()
+    if not entries:
+        console.print("[yellow]No audit log yet — log some decisions first.[/yellow]")
+        return
+    if tail > 0:
+        entries = entries[-tail:]
+
+    if raw:
+        import json as _json
+
+        for e in entries:
+            console.print_json(_json.dumps(e))
+        return
+
+    for i, entry in enumerate(entries, start=1):
+        flags = entry.get("biases_flagged", [])
+        slugs = ", ".join(b["slug"] for b in flags) or "(none)"
+        console.print(
+            Panel(
+                f"[dim]{entry['timestamp']}[/dim]\n\n"
+                f"[bold]Situation:[/bold] {entry['situation']}\n"
+                f"[bold]Reasoning:[/bold] {entry['reasoning']}\n"
+                f"[bold]Confidence:[/bold] {entry.get('confidence', '?')}\n\n"
+                f"[yellow]Detectors flagged:[/yellow] {slugs}",
+                title=f"Audit entry {i}",
+                border_style="cyan",
+            )
+        )
+    console.print(
+        f"\n[dim]Showing {len(entries)} entr"
+        f"{'y' if len(entries) == 1 else 'ies'}. Use `--tail 0` for all, "
+        f"`-o path.jsonl` to export.[/dim]"
+    )
+
+
 @decide_app.command("export")
 def decide_export(
     decision_id: int,
